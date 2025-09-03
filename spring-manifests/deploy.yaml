@@ -1,1 +1,18 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: spring-app
+  template:
+    metadata:
+      app: spring-app
+    spec:
+      containers:
+        - name: spring-app
+          image: shanjithv/maven-docker:latest
+          ports:
+            - containerPort: 8000
