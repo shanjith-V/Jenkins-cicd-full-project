@@ -21,7 +21,7 @@ pipeline {
         GIT_REPO_NAME = 'Jenkins-cicd-full-project'
         GIT_USER_NAME = 'shanjith-V'
         GIT_USER_EMAIL = 'sanjumac0810@gmail.com'
-        GITHUB_TOKEN = credentials('github')
+        GITHUB_TOKEN = credentials('githubcred')
     }
 
     stages {
