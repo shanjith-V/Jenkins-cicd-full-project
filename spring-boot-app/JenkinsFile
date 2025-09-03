@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.8.6-openjdk-17'   // Use Maven + JDK for Spring Boot
+            image 'shanjithv/maven-docker:latest'   // Use Maven + JDK for Spring Boot
             args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -11,14 +11,14 @@ pipeline {
         REGISTRY = "shanjithv"
         IMAGE_NAME = "spring-boot-app"
         DOCKER_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
-        DOCKER_CREDENTIALS = credentials('docker-cred')
+        DOCKER_CREDENTIALS = credentials('dockercred')
 
         // SonarQube
         SONAR_HOST_URL = 'http://sonarqube:9000'
         SONAR_TOKEN = credentials('sonarqube')
 
         // GitHub Repo for Manifests
-        GIT_REPO_NAME = 'ultimate-cicd-pipeline'
+        GIT_REPO_NAME = 'Jenkins-cicd-full-project'
         GIT_USER_NAME = 'shanjith-V'
         GIT_USER_EMAIL = 'sanjumac0810@gmail.com'
         GITHUB_TOKEN = credentials('github')
