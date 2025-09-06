@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'shanjithv/maven-docker:latest'   // Use Maven + JDK for Spring Boot
+            args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         // Docker Hub
@@ -12,14 +17,11 @@ pipeline {
         SONAR_HOST_URL = 'http://sonarqube:9000'
         SONAR_TOKEN = credentials('sonarqube')
 
-        // GitHub
+        // GitHub Repo for Manifests
         GIT_REPO_NAME = 'Jenkins-cicd-full-project'
         GIT_USER_NAME = 'shanjith-V'
         GIT_USER_EMAIL = 'sanjumac0810@gmail.com'
         GITHUB_TOKEN = credentials('githubcred')
-
-        // ArgoCD
-        ARGOCD_PASSWORD = credentials('argocd-admin-pass')
     }
 
     stages {
@@ -67,11 +69,11 @@ pipeline {
                     sh """
                         git config --global user.email "${GIT_USER_EMAIL}"
                         git config --global user.name "${GIT_USER_NAME}"
-
+                        
                         sed -i "s|replaceImageTag|${BUILD_NUMBER}|g" spring-boot-app-manifests/deployment.yml
-
+                        
                         git add spring-boot-app-manifests/deployment.yml
-                        git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
                     """
                 }
@@ -96,8 +98,6 @@ pipeline {
             script {
                 if (env.DOCKER_IMAGE) {
                     sh "docker rmi ${DOCKER_IMAGE} || true"
-                } else {
-                    echo "No DOCKER_IMAGE defined, skipping cleanup."
                 }
             }
         }
