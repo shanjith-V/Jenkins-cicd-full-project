@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'shanjithv/maven-docker:latest'   // Use Maven + JDK for Spring Boot
+            image 'abhishekf5/maven-abhishek-docker-agent:v1'   // Use Maven + JDK for Spring Boot
             args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
