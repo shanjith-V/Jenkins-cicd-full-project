@@ -1,10 +1,29 @@
 pipeline {
-  agent {
-    docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'   // Your custom image
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+    agent {
+        docker {
+            image 'shanjithv/maven-docker:latest'   // Use Maven + JDK for Spring Boot
+            args '-u root:root -v /Users/shanjith/.docker/run/docker.sock:/var/run/docker.sock'
+
+        }
     }
-  }
+
+    environment {
+        // Docker Hub
+        REGISTRY = "shanjithv"
+        IMAGE_NAME = "spring-boot-app"
+        DOCKER_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
+        DOCKER_CREDENTIALS = credentials('dockercred')
+
+        // SonarQube
+        SONAR_HOST_URL = 'http://sonarqube:9000'
+        SONAR_TOKEN = credentials('sonarqube')
+
+        // GitHub Repo for Manifests
+        GIT_REPO_NAME = 'Jenkins-cicd-full-project'
+        GIT_USER_NAME = 'shanjith-V'
+        GIT_USER_EMAIL = 'sanjumac0810@gmail.com'
+        GITHUB_TOKEN = credentials('githubcred')
+    }
 
   stages {
     stage('Checkout') {
