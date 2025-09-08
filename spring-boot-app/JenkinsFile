@@ -38,7 +38,7 @@ pipeline {
           sh '''
             cd spring-boot-app && mvn sonar:sonar \
               -Dsonar.projectKey=spring-boot-app \
-              -Dsonar.host.url=http://sonarqube:9000 \
+              -Dsonar.host.url=http://localhost:9000 \
               -Dsonar.login=$SONAR_AUTH_TOKEN
           '''
         }
