@@ -95,6 +95,11 @@
 
 pipeline {
     agent any
+     environment {
+        // Add Docker path
+        PATH+EXTRA = "/opt/homebrew/bin"
+    }
+
     stages {
         stage('Build & Docker') {
             steps {
