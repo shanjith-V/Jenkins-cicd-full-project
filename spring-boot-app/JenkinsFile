@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         // Docker Hub
+        PATH = "/usr/local/bin:/usr/bin:/bin:$PATH"
         REGISTRY = "shanjithv"
         IMAGE_NAME = "spring-boot-app"
         DOCKER_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
@@ -26,6 +27,13 @@ pipeline {
     }
 
   stages {
+    stage('Debug') {
+            steps {
+                sh 'echo "PATH=$PATH"'
+                sh 'which docker'
+                sh 'docker --version'
+            }
+        }
     stage('Checkout') {
       steps {
         git branch: 'main', url: 'https://github.com/shanjith-V/Jenkins-cicd-full-project.git'
