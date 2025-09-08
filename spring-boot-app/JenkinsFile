@@ -8,9 +8,7 @@ pipeline {
         DOCKER_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
         DOCKER_CREDENTIALS = credentials('dockercred')
 
-        // SonarQube
-        SONAR_HOST_URL = 'http://sonarqube:9000'
-        SONAR_TOKEN = credentials('sonarqube')
+    
 
         // GitHub Repo for Manifests
         GIT_REPO_NAME = 'Jenkins-cicd-full-project'
