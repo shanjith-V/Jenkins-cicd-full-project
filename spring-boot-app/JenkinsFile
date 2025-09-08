@@ -95,21 +95,21 @@
 
 pipeline {
     agent any
-     environment {
-        // Add Docker path
-        PATH+EXTRA = "/opt/homebrew/bin"
+
+    environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
     }
 
     stages {
         stage('Build & Docker') {
             steps {
                 sh '''
-                #!/bin/bash
-                echo "Building project"
-                mvn clean install
+                    #!/bin/bash
+                    echo "Building project"
+                    mvn clean install
 
-                echo "Running Docker container"
-                /opt/homebrew/bin/docker run hello-world
+                    echo "Running Docker container"
+                    docker run hello-world
                 '''
             }
         }
