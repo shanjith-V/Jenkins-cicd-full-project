@@ -8,7 +8,7 @@ pipeline {
         }
 
     environment {
-        PATH = "/opt/homebrew/bin:$PATH"
+        PATH = "${tool 'docker-homebrew'}/bin:${env.PATH}"
         // Docker Hub
         REGISTRY = "shanjithv"
         IMAGE_NAME = "spring-boot-app"
