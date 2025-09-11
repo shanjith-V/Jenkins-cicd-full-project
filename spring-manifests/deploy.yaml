@@ -13,7 +13,7 @@ spec:
         app: spring-app
     spec:
       containers:
-        - name: spring-app
-          image: shanjithv/maven-docker:latest
-          ports:
-            - containerPort: 8000
+      - name: spring-app
+        image: shanjithv/maven-docker:latest
+        ports:
+        - containerPort: 8080
