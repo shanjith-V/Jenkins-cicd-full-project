@@ -81,12 +81,12 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'argocd-password', variable: 'ARGO_PASS')]) {
                     sh '''
-                        argocd login 127.0.0.1:54283 --username admin --password $ARGO_PASS --insecure
-
-                        argocd app sync spring-boot-app
+                    /usr/local/bin/argocd login localhost:9000 --username admin --password $ARGO_PASS --insecure
+                    /usr/local/bin/argocd app sync spring-boot-app
                     '''
                 }
             }
         }
+
     }
 }
